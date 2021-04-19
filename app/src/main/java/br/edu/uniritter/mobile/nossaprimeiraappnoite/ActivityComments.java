@@ -27,18 +27,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.uniritter.mobile.nossaprimeiraappnoite.model.Album;
+import br.edu.uniritter.mobile.nossaprimeiraappnoite.model.Comment;
 import br.edu.uniritter.mobile.nossaprimeiraappnoite.model.Todo;
 
-public class SegundaActivity extends AppCompatActivity
+public class ActivityComments extends AppCompatActivity
         implements Response.Listener<JSONArray>,
         Response.ErrorListener{
 
-    List<Todo> todos =  new ArrayList<>();
+    List<Comment> comments =  new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_segunda);
-        TextView tv = (TextView) findViewById(R.id.textoSegunda);
+        setContentView(R.layout.activity_comments);
+        TextView tv = (TextView) findViewById(R.id.textoComments);
         Intent it = getIntent();
         String txt = it.getStringExtra("nome");
         Pessoa pes = it.getParcelableExtra("objPessoa");
@@ -48,50 +50,51 @@ public class SegundaActivity extends AppCompatActivity
 // Volley
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String urlTodo = "https://jsonplaceholder.typicode.com/todos";
+        String urlComment = "https://jsonplaceholder.typicode.com/comments";
 
         // Request de JsonArray da URL.
 
-        JsonArrayRequest jsonArrayRequestTodo = new JsonArrayRequest(Request.Method.GET, urlTodo, null,
+        JsonArrayRequest jsonArrayRequestComments = new JsonArrayRequest(Request.Method.GET, urlComment, null,
                 this, this);
 
 
 
         // Add the request to the RequestQueue.
-        queue.add(jsonArrayRequestTodo);
-        Toast.makeText(this,"qtd:"+todos.size(),Toast.LENGTH_LONG).show();
+        queue.add(jsonArrayRequestComments);
+        Toast.makeText(this,"qtd:"+comments.size(),Toast.LENGTH_LONG).show();
 
 
     }
-// Volley
+    // Volley
     @Override
     public void onResponse(JSONArray response) {
         try {
 
             for(int i = 0; i < response.length(); i++) {
                 JSONObject json = response.getJSONObject(i);
-                Todo obj = new Todo(json.getInt("userId"),
+                Comment obj = new Comment(json.getInt("postId"),
                         json.getInt("id"),
-                        json.getString("title"),
-                        json.getBoolean("completed"));
-                todos.add(obj);
+                        json.getString("name"),
+                        json.getString("email"),
+                        json.getString("body"));
+                comments.add(obj);
 
             }
-            Toast.makeText(this,"qtd:"+todos.size(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"qtd:"+comments.size(),Toast.LENGTH_LONG).show();
             LinearLayout ll = findViewById(R.id.layoutVerticalItens);
-            for(Todo obj1 : todos) {
+            for(Comment obj1 : comments) {
                 Button bt = new Button(this);
-                bt.setText(obj1.getTitle());
+                bt.setText(obj1.getName());
                 bt.setTag(obj1);
                 bt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Button btn = (Button) v;
-                        Todo todo = (Todo) btn.getTag();
-                        Intent intent = new Intent(getApplicationContext(), DetalheTodoActivity.class);
+                        Comment comment = (Comment) btn.getTag();
+                        Intent intent = new Intent(getApplicationContext(), DetalheCommentActivity.class);
 
                         // adicional para incluir dados para a proxima activity
-                        intent.putExtra("objTodo", todo);
+                        intent.putExtra("objComment", comment);
                         // lança intent para o SO chamar a activity
                         startActivity(intent);
                         //Toast.makeText(v.getContext(),todo.getId()+" - "+todo.getTitle(),Toast.LENGTH_LONG).show();

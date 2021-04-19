@@ -27,18 +27,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.uniritter.mobile.nossaprimeiraappnoite.model.Album;
 import br.edu.uniritter.mobile.nossaprimeiraappnoite.model.Todo;
 
-public class SegundaActivity extends AppCompatActivity
+public class AlbumsActivity extends AppCompatActivity
         implements Response.Listener<JSONArray>,
         Response.ErrorListener{
 
-    List<Todo> todos =  new ArrayList<>();
+    List<Album> albums =  new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_segunda);
-        TextView tv = (TextView) findViewById(R.id.textoSegunda);
+        setContentView(R.layout.activity_albums);
+        TextView tv = (TextView) findViewById(R.id.textoAlbums);
         Intent it = getIntent();
         String txt = it.getStringExtra("nome");
         Pessoa pes = it.getParcelableExtra("objPessoa");
@@ -48,38 +49,37 @@ public class SegundaActivity extends AppCompatActivity
 // Volley
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String urlTodo = "https://jsonplaceholder.typicode.com/todos";
+        String urlAlbum = "https://jsonplaceholder.typicode.com/albums";
 
         // Request de JsonArray da URL.
 
-        JsonArrayRequest jsonArrayRequestTodo = new JsonArrayRequest(Request.Method.GET, urlTodo, null,
+        JsonArrayRequest jsonArrayRequestAlbums = new JsonArrayRequest(Request.Method.GET, urlAlbum, null,
                 this, this);
 
 
 
         // Add the request to the RequestQueue.
-        queue.add(jsonArrayRequestTodo);
-        Toast.makeText(this,"qtd:"+todos.size(),Toast.LENGTH_LONG).show();
+        queue.add(jsonArrayRequestAlbums);
+        Toast.makeText(this,"qtd:"+albums.size(),Toast.LENGTH_LONG).show();
 
 
     }
-// Volley
+    // Volley
     @Override
     public void onResponse(JSONArray response) {
         try {
 
             for(int i = 0; i < response.length(); i++) {
                 JSONObject json = response.getJSONObject(i);
-                Todo obj = new Todo(json.getInt("userId"),
+                Album obj = new Album(json.getInt("userId"),
                         json.getInt("id"),
-                        json.getString("title"),
-                        json.getBoolean("completed"));
-                todos.add(obj);
+                        json.getString("title"));
+                albums.add(obj);
 
             }
-            Toast.makeText(this,"qtd:"+todos.size(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"qtd:"+albums.size(),Toast.LENGTH_LONG).show();
             LinearLayout ll = findViewById(R.id.layoutVerticalItens);
-            for(Todo obj1 : todos) {
+            for(Album obj1 : albums) {
                 Button bt = new Button(this);
                 bt.setText(obj1.getTitle());
                 bt.setTag(obj1);
@@ -87,11 +87,11 @@ public class SegundaActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v) {
                         Button btn = (Button) v;
-                        Todo todo = (Todo) btn.getTag();
-                        Intent intent = new Intent(getApplicationContext(), DetalheTodoActivity.class);
+                        Album album = (Album) btn.getTag();
+                        Intent intent = new Intent(getApplicationContext(), DetalheAlbumActivity.class);
 
                         // adicional para incluir dados para a proxima activity
-                        intent.putExtra("objTodo", todo);
+                        intent.putExtra("objAlbum", album);
                         // lança intent para o SO chamar a activity
                         startActivity(intent);
                         //Toast.makeText(v.getContext(),todo.getId()+" - "+todo.getTitle(),Toast.LENGTH_LONG).show();

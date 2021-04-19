@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DetalheTodoActivity">
+    tools:context=".DetalheCommentActivity">
+
+    <TextView
+        android:id="@+id/tvPostId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/tvId"
@@ -14,13 +20,7 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/tvIdUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -28,12 +28,23 @@
         android:textSize="30sp"
         android:textStyle="bold|italic" />
 
-    <CheckBox
-        android:id="@+id/cbCompleted"
+    <TextView
+        android:id="@+id/tvEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checked="false"
-        android:onClick="cbClick"
-        android:text="Completado" />
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="30sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/tvBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="30sp"
+        android:textStyle="bold|italic" />
+
 
 </LinearLayout>

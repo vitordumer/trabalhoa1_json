@@ -2,4 +2,17 @@
     <string name="app_name">nossa primeira app noite</string>
     <string name="ola">Olá mundo, tem dev preguiçoso por ai</string>
     <string name="bt_dispara">Disparar</string>
+    <string name="bt_albums">Lista Albums</string>
+    <string name="bt_todos">Lista Todos</string>
+    <string name="bt_comments">Lista Comments</string>
+    <string name="bt_posts">Lista Posts</string>
+    <string name="title_activity_post">PostActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

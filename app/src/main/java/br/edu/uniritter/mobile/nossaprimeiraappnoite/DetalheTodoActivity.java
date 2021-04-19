@@ -19,14 +19,9 @@ public class DetalheTodoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalhe_todo);
         Intent intent = getIntent();
         Parcelable prc = intent.getParcelableExtra("objTodo");
-        if (prc instanceof Todo) {
-
-        }
-        if (prc instanceof Pessoa) {
-
-        }
         Todo todo = intent.getParcelableExtra("objTodo");
         bind(todo);
+
 
     }
     public void trocaLayout(View v) {

@@ -27,18 +27,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.uniritter.mobile.nossaprimeiraappnoite.model.Post;
+import br.edu.uniritter.mobile.nossaprimeiraappnoite.model.Post;
 import br.edu.uniritter.mobile.nossaprimeiraappnoite.model.Todo;
 
-public class SegundaActivity extends AppCompatActivity
+public class PostActivity extends AppCompatActivity
         implements Response.Listener<JSONArray>,
         Response.ErrorListener{
 
-    List<Todo> todos =  new ArrayList<>();
+    List<Post> posts =  new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_segunda);
-        TextView tv = (TextView) findViewById(R.id.textoSegunda);
+        setContentView(R.layout.activity_post);
+        TextView tv = (TextView) findViewById(R.id.textoPosts);
         Intent it = getIntent();
         String txt = it.getStringExtra("nome");
         Pessoa pes = it.getParcelableExtra("objPessoa");
@@ -48,38 +50,38 @@ public class SegundaActivity extends AppCompatActivity
 // Volley
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String urlTodo = "https://jsonplaceholder.typicode.com/todos";
+        String urlPost = "https://jsonplaceholder.typicode.com/posts";
 
         // Request de JsonArray da URL.
 
-        JsonArrayRequest jsonArrayRequestTodo = new JsonArrayRequest(Request.Method.GET, urlTodo, null,
+        JsonArrayRequest jsonArrayRequestPosts = new JsonArrayRequest(Request.Method.GET, urlPost, null,
                 this, this);
 
 
 
         // Add the request to the RequestQueue.
-        queue.add(jsonArrayRequestTodo);
-        Toast.makeText(this,"qtd:"+todos.size(),Toast.LENGTH_LONG).show();
+        queue.add(jsonArrayRequestPosts);
+        Toast.makeText(this,"qtd:"+posts.size(),Toast.LENGTH_LONG).show();
 
 
     }
-// Volley
+    // Volley
     @Override
     public void onResponse(JSONArray response) {
         try {
 
             for(int i = 0; i < response.length(); i++) {
                 JSONObject json = response.getJSONObject(i);
-                Todo obj = new Todo(json.getInt("userId"),
+                Post obj = new Post(json.getInt("userId"),
                         json.getInt("id"),
                         json.getString("title"),
-                        json.getBoolean("completed"));
-                todos.add(obj);
+                        json.getString("body"));
+                posts.add(obj);
 
             }
-            Toast.makeText(this,"qtd:"+todos.size(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"qtd:"+posts.size(),Toast.LENGTH_LONG).show();
             LinearLayout ll = findViewById(R.id.layoutVerticalItens);
-            for(Todo obj1 : todos) {
+            for(Post obj1 : posts) {
                 Button bt = new Button(this);
                 bt.setText(obj1.getTitle());
                 bt.setTag(obj1);
@@ -87,11 +89,11 @@ public class SegundaActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v) {
                         Button btn = (Button) v;
-                        Todo todo = (Todo) btn.getTag();
-                        Intent intent = new Intent(getApplicationContext(), DetalheTodoActivity.class);
+                        Post post = (Post) btn.getTag();
+                        Intent intent = new Intent(getApplicationContext(), DetalhePostActivity.class);
 
                         // adicional para incluir dados para a proxima activity
-                        intent.putExtra("objTodo", todo);
+                        intent.putExtra("objPost", post);
                         // lança intent para o SO chamar a activity
                         startActivity(intent);
                         //Toast.makeText(v.getContext(),todo.getId()+" - "+todo.getTitle(),Toast.LENGTH_LONG).show();
